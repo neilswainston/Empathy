@@ -49,7 +49,7 @@ def _get_fingerprint(smiles):
     '''Get fingerprint.'''
     mol = Chem.MolFromSmiles(smiles)
 
-    if mol.GetNumAtoms(onlyHeavy=False) == 1:
+    if mol.GetNumAtoms(onlyExplicit=False) == 1:
         raise ValueError(smiles)
 
     return FingerprintMols.FingerprintMol(mol)
