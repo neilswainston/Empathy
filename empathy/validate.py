@@ -18,13 +18,13 @@ import pandas as pd
 
 
 def analyse(filename_in, filename_out):
-    '''Analyse predictions.'''
+    '''Analyse similarities.'''
     with open(filename_in) as json_data:
         data = json.load(json_data)
 
         for entry in data['reaction']:
-            entry['similarity'] = _get_similarity(entry['reactant_smile'],
-                                                  entry['product_smile'])
+            entry['similarity'] = get_similarity(entry['reactant_smile'],
+                                                 entry['product_smile'])
 
     # Write updated json:
     with open(filename_out + '.json', 'w') as outfile:
@@ -36,7 +36,7 @@ def analyse(filename_in, filename_out):
     df.to_csv(filename_out + '.csv', encoding='utf-8-sig', index=False)
 
 
-def _get_similarity(smiles1, smiles2):
+def get_similarity(smiles1, smiles2):
     '''Get similarity.'''
     try:
         return DataStructs.FingerprintSimilarity(_get_fingerprint(smiles1),
